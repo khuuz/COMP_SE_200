@@ -26,21 +26,25 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      # Debug: List files in the current directory
-      - name: Debug - List files
-        run: ls -al
-
-      # Debug: Print the content of the lcov.info file
-      - name: Debug - Show lcov.info content
-        run: cat coverage/lcov.info
+      
 
       # Run tests with coverage
       - name: Run tests with coverage
         run: npm test -- --coverage
 
+        # Debug: List files in the current directory
+      - name: Debug - List files
+        run: ls -al
+
+      
+
       # Debug: List files in the coverage directory
       - name: Debug - List coverage files
         run: ls -al coverage
+
+        # Debug: Print the content of the lcov.info file
+      - name: Debug - Show lcov.info content
+        run: cat coverage/lcov.info
 
       # Upload coverage to Coveralls
       - name: Upload coverage to Coveralls
