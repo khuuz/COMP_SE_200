@@ -2,5 +2,6 @@
   "transform": {
     "^.+\\.jsx?$": "babel-jest"
   },
-  "testEnvironment": "node"
+  "testEnvironment": "node",
+  "coverageReporters": ["lcov"]
 }
