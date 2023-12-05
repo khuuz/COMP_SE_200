@@ -48,3 +48,4 @@ describe("at", () => {
     expect(at(object, "a")).toEqual([[{ b: { c: 3 } }, 4]]);
   });
 });
+
