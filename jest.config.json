@@ -3,5 +3,9 @@
     "^.+\\.jsx?$": "babel-jest"
   },
   "testEnvironment": "node",
-  "coverageReporters": ["lcov"]
+  "coverageReporters": ["lcov"],
+  "collectCoverageFrom": [
+    "src/**/*.{js,jsx,ts,tsx}",
+    "!src/**/*.internal/*.{js,jsx,ts,tsx}"
+  ]
 }
