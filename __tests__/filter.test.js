@@ -39,9 +39,9 @@ describe("filter", () => {
     expect(filter(numbers, (value) => value % 2 === 0)).toEqual([2, 4]);
   });
 
-  test("filters by identity when no predicate is provided", () => {
-    const values = [1, 2, null, 3, undefined, 4];
-    expect(filter(values)).toEqual([1, 2, 3, 4]);
+  test("fail when predicate is not provided", () => {
+    const values = [1, 2, 3, 4, 5];
+    expect(() => filter(values)).toThrow(TypeError);
   });
 
   test("filters by string length", () => {

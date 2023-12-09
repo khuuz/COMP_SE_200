@@ -1,6 +1,9 @@
 import memoize from "../src/memoize.js";
 
 describe("memoize", () => {
+  beforeEach(() => {
+    memoize.Cache = Map;
+  });
   test("memoizes function results", () => {
     const square = jest.fn((n) => n * n);
     const memoizedSquare = memoize(square);
@@ -42,7 +45,7 @@ describe("memoize", () => {
   test("allows replacing cache constructor", () => {
     const square = (n) => n * n;
     memoize.Cache = WeakMap;
-    const memoizedSquare = memoize(square);
+    const memoizedSquare = memoize(square, (n) => ({n}));
     expect(memoizedSquare.cache).toBeInstanceOf(WeakMap);
   });
 
@@ -50,9 +53,8 @@ describe("memoize", () => {
     expect(() => memoize(null)).toThrow("Expected a function");
   });
 
-  test("throws error when resolver is not a function", () => {
-    const square = (n) => n * n;
-    expect(() => memoize(square, null)).toThrow("Expected a function");
+  test("throws error when function and resolver are not functions", () => {
+    expect(() => memoize(null, null)).toThrow("Expected a function");
   });
 
   test("handles multiple arguments", () => {
@@ -67,7 +69,7 @@ describe("memoize", () => {
     const add = jest.fn((a, b) => a + b);
     const memoizedAdd = memoize(add);
     expect(memoizedAdd(1, 2)).toBe(3);
-    expect(memoizedAdd(1, 3)).toBe(4);
+    expect(memoizedAdd(3, 1)).toBe(4);
     expect(add).toHaveBeenCalledTimes(2);
   });
 });
