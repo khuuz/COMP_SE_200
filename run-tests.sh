@@ -5,4 +5,4 @@ then
     npm ci
 fi
 
-npm test
+npm test -- --coverage
