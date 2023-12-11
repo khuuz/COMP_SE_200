@@ -111,11 +111,13 @@ describe("filter", () => {
   });
 
   test("handles sparse arrays", () => {
-    const sparse = [1, , 3]; // eslint-disable-line no-sparse-arrays
+    const sparse = [1, , 3];
     expect(filter(sparse, (value) => value === 1)).toEqual([1]);
   });
 
   test("throws error when predicate is not a function", () => {
-    expect(() => filter([1, 2, 3], null)).toThrow("Expected a function");
+    expect(() => filter([1, 2, 3], null)).toThrow(
+      "predicate is not a function"
+    );
   });
 });
