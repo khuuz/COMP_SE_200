@@ -65,4 +65,34 @@ describe("map", () => {
     const toNull = () => null;
     expect(map([1, 2, 3], toNull)).toEqual([null, null, null]);
   });
+
+  test("handles non-array inputs", () => {
+    const square = (n) => n * n;
+    expect(map({ length: 2, 0: 1, 1: 2 }, square)).toEqual([1, 4]);
+  });
+
+  test("handles array-like objects", () => {
+    const square = (n) => n * n;
+    expect(map({ length: 2, 0: 1, 1: 2 }, square)).toEqual([1, 4]);
+  });
+
+  test("handles iteratee that changes the original array", () => {
+    const changeOriginal = (n, i, arr) => {
+      arr[i] = n * n;
+      return n;
+    };
+    const original = [1, 2, 3];
+    expect(map(original, changeOriginal)).toEqual([1, 2, 3]);
+    expect(original).toEqual([1, 4, 9]);
+  });
+
+  test("handles sparse arrays", () => {
+    const square = (n) => n * n;
+    const sparse = [1, , 3];
+    expect(map(sparse, square)).toEqual([1, NaN, 9]);
+  });
+
+  test("throws error when iteratee is not a function", () => {
+    expect(() => map([1, 2, 3], null)).toThrow("iteratee is not a function");
+  });
 });

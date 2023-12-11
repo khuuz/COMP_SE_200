@@ -40,4 +40,32 @@ describe("difference", () => {
   test("returns the difference with array of mixed types", () => {
     expect(difference([true, "a", 1], [true, "a"])).toEqual([1]);
   });
+
+  test("returns the original array when the values array is empty", () => {
+    expect(difference([2, 1], [])).toEqual([2, 1]);
+  });
+
+  test("returns the original array when the values array is null", () => {
+    expect(difference([2, 1], null)).toEqual([2, 1]);
+  });
+
+  test("returns an empty array when both the array and values array are empty", () => {
+    expect(difference([], [])).toEqual([]);
+  });
+
+  test("returns an empty array when both the array and values array are null", () => {
+    expect(difference(null, null)).toEqual([]);
+  });
+
+  test("returns the difference when the array contains undefined or null values", () => {
+    expect(difference([2, 1, undefined, null], [2, 3])).toEqual([
+      1,
+      undefined,
+      null,
+    ]);
+  });
+
+  test("returns the difference when the values array contains undefined or null values", () => {
+    expect(difference([2, 1], [2, 3, undefined, null])).toEqual([1]);
+  });
 });

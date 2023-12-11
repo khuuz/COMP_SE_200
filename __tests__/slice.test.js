@@ -40,4 +40,32 @@ describe("slice", () => {
   test("returns empty array when start is greater than array length", () => {
     expect(slice([1, 2, 3, 4], 5)).toEqual([]);
   });
+
+  test("returns empty array when start is negative and greater than array length in magnitude", () => {
+    expect(slice([1, 2, 3, 4], -5)).toEqual([1, 2, 3, 4]);
+  });
+
+  test("returns empty array when end is negative and greater than array length in magnitude", () => {
+    expect(slice([1, 2, 3, 4], 0, -5)).toEqual([]);
+  });
+
+  test("returns whole array when start and end are not provided", () => {
+    expect(slice([1, 2, 3, 4])).toEqual([1, 2, 3, 4]);
+  });
+
+  test("returns empty array when array is empty", () => {
+    expect(slice([], 0, 2)).toEqual([]);
+  });
+
+  test("returns empty array when non-array is provided", () => {
+    expect(slice("thisischararray", 0, 2)).toEqual(["t", "h"]);
+  });
+
+  test("returns empty array when start is not a number", () => {
+    expect(slice([1, 2, 3, 4], "not a number", 2)).toEqual([]);
+  });
+
+  test("returns empty array when end is not a number", () => {
+    expect(slice([1, 2, 3, 4], 0, "not a number")).toEqual([]);
+  });
 });

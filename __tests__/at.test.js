@@ -47,5 +47,31 @@ describe("at", () => {
   test("should handle path to array", () => {
     expect(at(object, "a")).toEqual([[{ b: { c: 3 } }, 4]]);
   });
-});
 
+  test("should handle null object", () => {
+    expect(at(null, ["a[0].b.c", "a[1]"])).toEqual([undefined, undefined]);
+  });
+
+  test("should handle undefined object", () => {
+    expect(at(undefined, ["a[0].b.c", "a[1]"])).toEqual([undefined, undefined]);
+  });
+
+  test("should handle non-object", () => {
+    expect(at("not an object", ["a[0].b.c", "a[1]"])).toEqual([
+      undefined,
+      undefined,
+    ]);
+  });
+
+  test("should handle null path", () => {
+    expect(at(object, null)).toEqual([undefined]);
+  });
+
+  test("should handle undefined path", () => {
+    expect(at(object, undefined)).toEqual([undefined]);
+  });
+
+  test("should handle non-string path", () => {
+    expect(at(object, 123)).toEqual([undefined]);
+  });
+});

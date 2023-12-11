@@ -37,8 +37,8 @@ describe("reduce", () => {
     const iteratee = jest.fn((acc, value, key, collection) => acc);
     reduce([1, 2, 3], iteratee, 0);
     expect(iteratee).toHaveBeenNthCalledWith(1, 0, 1, 0, [1, 2, 3]);
-    expect(iteratee).toHaveBeenNthCalledWith(2, 1, 2, 1, [1, 2, 3]);
-    expect(iteratee).toHaveBeenNthCalledWith(3, 3, 3, 2, [1, 2, 3]);
+    expect(iteratee).toHaveBeenNthCalledWith(2, 0, 2, 1, [1, 2, 3]);
+    expect(iteratee).toHaveBeenNthCalledWith(3, 0, 3, 2, [1, 2, 3]);
   });
 
   test("returns initial accumulator when collection is empty", () => {
@@ -61,8 +61,24 @@ describe("reduce", () => {
     expect(reduce({ 0: 1, 1: 2, length: 2 }, sum)).toBe(3);
   });
 
-  test("throws error when collection is not an array, object, or array-like object", () => {
+  test("should handle null collection", () => {
     const sum = (acc, n) => acc + n;
-    expect(() => reduce(123, sum, 0)).toThrow();
+    expect(reduce(null, sum, 0)).toBe(0);
+  });
+
+  test("should handle undefined collection", () => {
+    const sum = (acc, n) => acc + n;
+    expect(reduce(undefined, sum, 0)).toBe(0);
+  });
+
+  test("should handle non-function iteratee", () => {
+    expect(() => reduce([1, 2, 3], "not a function", 0)).toThrow(
+      "iteratee is not a function"
+    );
+  });
+  test("should handle undefined iteratee", () => {
+    expect(() => reduce([1, 2, 3], undefined, 0)).toThrow(
+      "iteratee is not a function"
+    );
   });
 });

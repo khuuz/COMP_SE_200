@@ -42,4 +42,28 @@ describe("isArrayLike", () => {
     expect(isArrayLike({ length: "3" })).toBe(false);
     expect(isArrayLike({ length: 3.5 })).toBe(false);
   });
+
+  test("returns false for objects with negative length property", () => {
+    expect(isArrayLike({ length: -3 })).toBe(false);
+  });
+
+  test("returns false for objects with NaN length property", () => {
+    expect(isArrayLike({ length: NaN })).toBe(false);
+  });
+
+  test("returns false for objects with infinite length property", () => {
+    expect(isArrayLike({ length: Infinity })).toBe(false);
+  });
+
+  test("returns false for objects with length property as a function", () => {
+    expect(isArrayLike({ length: () => 3 })).toBe(false);
+  });
+
+  test("returns true for empty strings", () => {
+    expect(isArrayLike("")).toBe(true);
+  });
+
+  test("returns true for objects with length 0", () => {
+    expect(isArrayLike({ length: 0 })).toBe(true);
+  });
 });

@@ -79,4 +79,43 @@ describe("filter", () => {
       new Date(2020, 1, 1),
     ]);
   });
+
+  test("returns empty array when input is empty", () => {
+    const emptyArray = [];
+    expect(filter(emptyArray, (value) => value)).toEqual([]);
+  });
+
+  test("returns empty array when no elements pass the predicate", () => {
+    const numbers = [1, 2, 3, 4, 5];
+    expect(filter(numbers, (value) => value > 10)).toEqual([]);
+  });
+
+  test("handles non-array inputs", () => {
+    const nonArray = { length: 2, 0: 1, 1: 2 };
+    expect(filter(nonArray, (value) => value === 1)).toEqual([1]);
+  });
+
+  test("handles array-like objects", () => {
+    const arrayLike = { length: 2, 0: 1, 1: 2 };
+    expect(filter(arrayLike, (value) => value === 1)).toEqual([1]);
+  });
+
+  test("handles predicate that changes the original array", () => {
+    const changeOriginal = (n, i, arr) => {
+      arr[i] = n * n;
+      return n > 2;
+    };
+    const original = [1, 2, 3];
+    expect(filter(original, changeOriginal)).toEqual([3]);
+    expect(original).toEqual([1, 4, 9]);
+  });
+
+  test("handles sparse arrays", () => {
+    const sparse = [1, , 3]; // eslint-disable-line no-sparse-arrays
+    expect(filter(sparse, (value) => value === 1)).toEqual([1]);
+  });
+
+  test("throws error when predicate is not a function", () => {
+    expect(() => filter([1, 2, 3], null)).toThrow("Expected a function");
+  });
 });

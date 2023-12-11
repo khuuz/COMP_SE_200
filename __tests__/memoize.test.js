@@ -45,7 +45,7 @@ describe("memoize", () => {
   test("allows replacing cache constructor", () => {
     const square = (n) => n * n;
     memoize.Cache = WeakMap;
-    const memoizedSquare = memoize(square, (n) => ({n}));
+    const memoizedSquare = memoize(square, (n) => ({ n }));
     expect(memoizedSquare.cache).toBeInstanceOf(WeakMap);
   });
 
@@ -71,5 +71,12 @@ describe("memoize", () => {
     expect(memoizedAdd(1, 2)).toBe(3);
     expect(memoizedAdd(3, 1)).toBe(4);
     expect(add).toHaveBeenCalledTimes(2);
+  });
+
+  test("throws error when memoize.Cache is WeakMap and resolver is not provided", () => {
+    const square = jest.fn((n) => n * n);
+    memoize.Cache = WeakMap;
+    const memoizedSquare = memoize(square);
+    expect(() => memoizedSquare(4)).toThrow();
   });
 });

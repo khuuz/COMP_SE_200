@@ -50,4 +50,34 @@ describe("get", () => {
     const object = null;
     expect(get(object, "a.b.c")).toBeUndefined();
   });
+
+  test("returns undefined for empty path", () => {
+    const object = { a: 1 };
+    expect(get(object, "")).toBeUndefined();
+  });
+
+  test("returns undefined for wrong format path", () => {
+    const object = { a: 1 };
+    expect(get(object, [])).toBeUndefined();
+  });
+
+  test("returns undefined for non-string, non-array path", () => {
+    const object = { a: 1 };
+    expect(get(object, 123)).toBeUndefined();
+  });
+
+  test("returns undefined for path that starts with a dot", () => {
+    const object = { a: 1 };
+    expect(get(object, ".a")).toBeUndefined();
+  });
+
+  test("returns undefined for path that ends with a dot", () => {
+    const object = { a: 1 };
+    expect(get(object, "a.")).toBeUndefined();
+  });
+
+  test("returns undefined for path with consecutive dots", () => {
+    const object = { a: { b: 1 } };
+    expect(get(object, "a..b")).toBeUndefined();
+  });
 });
