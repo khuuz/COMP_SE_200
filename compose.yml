@@ -1,0 +1,8 @@
+services:
+  node:
+    image: node:lts
+    command: /mnt/run-tests.sh
+    volumes:
+      - .:/mnt
+
+    working_dir: /mnt
