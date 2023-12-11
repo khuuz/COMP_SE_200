@@ -1,6 +1,6 @@
 services:
   node:
-    image: node:lts
+    image: node:14
     command: /mnt/run-tests.sh
     volumes:
       - .:/mnt
